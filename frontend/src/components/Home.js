@@ -1,6 +1,10 @@
 import React from "react";
+import {useState} from "react";
 import "../StyleSheet/home.css";
 const Home = () => {
+  const [Issue,setIssue]=useState({
+    userid:"",
+  })
   return (
     <>
       <h1>Raise Issue</h1>
