@@ -4,16 +4,16 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Home from "./components/Home";
-import Blog from "./components/Blog";
+// import Home from "./components/Home";
+// import Blog from "./components/Blog";
 import "./App.css";
-import test from "./App.test";
+import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <>
 	 <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="#home">Ticket Generating System</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
