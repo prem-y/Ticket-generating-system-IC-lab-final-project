@@ -1,99 +1,49 @@
 const express = require("express");
-const db = require("mongoose");
-var cors = require("cors");
+const mongoose = require("mongoose");
+const cors = require("cors");
 var ObjectId = require("mongodb").ObjectId;
 const app = express();
+app.use(express());
 app.use(express.json());
-db.set("strictQuery", false);
 app.use(cors());
 
-db.connect("mongodb+srv://premy:premy@cluster0.kwshgmg.mongodb.net/Ticket-generating-system", {
-  useNewURLParser: true,
-  useUnifiedTopology: true,
+mongoose.set("strictQuery", false);
+mongoose.connect("mongodb+srv://premy:premy@cluster0.kwshgmg.mongodb.net/ticket_generator")
+
+.then(()=>{
+  console.log("MongoDb is Connected...");
 })
-  .then(() => console.log("MongoDb is connected"))
-  .catch((err) => console.log(err));
-
-var conn = db.connection;
-
-app.post("/insert", function (req, res) {
-    const fdata = req.body.fdata;
-    conn.collection("form_data").insertOne(fdata, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("inserted");
-        res.status(202).send("success");
-      }
-    });
-  });
-app.listen(3000, () => {
-    console.log("server running at 3000");
+.catch(()=>{
+  console.log("Error...");
 });
 
-app.get("/", (req, res) => {
-    conn
-      .collection("form_data")
-      .find({})
-      .toArray((err, result) => {
-        if (err) res.status(400).send("error fetching data");
-        res.json(result);
-      });
-  });
+app.post("/insert",(req,res)=>{
+  const data = req.body.data;
 
-
-  app.post("/delete", (req, res) => {
-    console.log(req.body.id);
-    let id = req.body.id;
-    conn
-      .collection("form_data")
-      .deleteOne({ _id: ObjectId(id) })
-      .then((err) => {
-        if (err) {
-          console.log("record not deleted");
-        } else {
-          console.log("deleted");
-          res.status(204).send("success");
-        }
-      });
+  let connect = mongoose.connection;
+  connect.collection("ticket_generator").insertOne(data,(err)=>{
+    if(err){
+      console.log("Error");
+    } else{
+      console.log("Inserted Successfully");
+      res.status(200).send("Success");
+    }
   });
+});
 
-  app.post("/get", (req, res) => {
-    let id = req.body.id;
-    console.log(id);
-    conn
-      .collection("form_data")
-      .find({ _id: ObjectId(id) })
-      .toArray((err, result) => {
-        if (err) res.status(400).send("error fetching data");
-        res.json(result);
-        console.log(result);
-      });
-  });
+app.listen(4000,()=>{
+  console.log("Server is connected at port 4000...");
+})
 
-  app.post("/update", (req, res) => {
-    console.log(req.body);
-    let id = req.body._id;
-    let title = req.body.title;
-    let content = req.body.content;
-    let author = req.body.author;
-    console.log(id);
-    console.log(title);
-    console.log(content);
-    console.log(author);
-    conn
-      .collection("form_data")
-      .updateOne(
-        { _id: ObjectId(id) },
-        { $set: { title: title, content: content, author: author } }
-      )
-      .then((err) => {
-        if (err) {
-          console.log("record not updateed");
-          console.log(err);
-        } else {
-          console.log("updated");
-          res.status(204).send("success");
-        }
-      });
+//************get data */
+
+app.get("/",(req,res)=>{
+  conn
+  .collection("ticket_generator")
+  .find({})
+  .toArray((err,result)=>{
+    if(err) res.status(400).send("error fetching data");
+    res.json(result);
   });
+});
+
