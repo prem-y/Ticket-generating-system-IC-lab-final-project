@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Home from "./components/Home";
-import Blog from "./components/Issues";
+import List from "./components/List";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
@@ -18,7 +18,7 @@ function App() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/Blog">Issues</Nav.Link>
+              <Nav.Link href="/List">Issues</Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
@@ -39,7 +39,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home/>}></Route>
-          <Route path="/Blog" element={<Blog/>}></Route>
+          <Route path="/List" element={<List/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
